@@ -346,6 +346,13 @@ final class Image extends AbstractImage
 
             $this->layers->animate($format, $delay, $loops);
         } else {
+            $bg = isset($options['background-color']) ? trim($options['background-color']) : '';
+            if ($bg !== '') {
+                $this->imagick->setImageBackgroundColor($bg);
+                $this->imagick->setImageAlphaChannel(\Imagick::ALPHACHANNEL_REMOVE);
+//            // $im = $im->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+                $options['flatten'] = true;
+            }
             $this->layers->merge();
         }
         $this->applyImageOptions($this->imagick, $options, $path);

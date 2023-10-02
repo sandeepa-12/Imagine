@@ -147,6 +147,18 @@ final class CMYK implements ColorInterface
         );
     }
 
+    public function invert()
+    {
+        return $this->palette->color(
+            array(
+                255 - $this->c,
+                255 - $this->m,
+                255 - $this->y,
+                255 - $this->k,
+            )
+        );
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -70,6 +70,11 @@ interface ColorInterface
     public function lighten($shade);
 
     /**
+     * @return ColorInterface
+     */
+    public function invert();
+
+    /**
      * Returns a copy of the current color, darkened by the specified number of
      * shades
      *

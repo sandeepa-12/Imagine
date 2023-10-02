@@ -72,7 +72,7 @@ final class Imagine extends AbstractImagine
         $color = null !== $color ? $color : $palette->color('fff');
 
         try {
-            $pixel = new \ImagickPixel((string) $color);
+            $pixel = new \ImagickPixel((string) $color . 'FF');
             $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
 
             $imagick = new \Imagick();

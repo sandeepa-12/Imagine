@@ -96,6 +96,11 @@ final class Gray implements ColorInterface
         return $this->palette->color(array(min(255, $this->gray + $shade)), $this->alpha);
     }
 
+    public function invert()
+    {
+        return $this->palette->color(array(255 - $this->gray), $this->alpha);
+    }
+
     /**
      * {@inheritdoc}
      */

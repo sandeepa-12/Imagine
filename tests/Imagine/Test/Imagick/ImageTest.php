@@ -67,6 +67,15 @@ class ImageTest extends AbstractImageTest
         unlink('tests/Imagine/Fixtures/resize/small.png');
     }
 
+    public function testImageGetFullResEPS()
+    {
+        $imagine = $this->getImagine();
+
+        $image = $imagine->open('tests/Imagine/Fixtures/big.eps');
+
+        $this->assertEquals($image->getSize()->getWidth(), 2250);
+    }
+
     // Older imagemagick versions does not support colorspace conversion
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
@@ -101,5 +110,10 @@ class ImageTest extends AbstractImageTest
     protected function getImageResolution(ImageInterface $image)
     {
         return $image->getImagick()->getImageResolution();
+    }
+
+    protected function supportMatteChannel()
+    {
+        return true;
     }
 }

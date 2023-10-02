@@ -49,7 +49,9 @@ final class Imagine extends AbstractImagine
         $path = $this->checkPath($path);
 
         try {
-            $imagick = new \Imagick($path);
+            $imagick = new \Imagick();
+            $imagick->setResolution(300.0, 300.0);
+            $imagick->readImage($path);
             $image = new Image($imagick, $this->createPalette($imagick), $this->getMetadataReader()->readFile($path));
         } catch (\Exception $e) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path), $e->getCode(), $e);
@@ -71,14 +73,15 @@ final class Imagine extends AbstractImagine
 
         try {
             $pixel = new \ImagickPixel((string) $color);
-            $pixel->setColorValue(\Imagick::COLOR_ALPHA, number_format(round($color->getAlpha() / 100, 2), 1));
+            $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
 
             $imagick = new \Imagick();
+            $imagick->setResolution(300.0, 300.0);
             $imagick->newImage($width, $height, $pixel);
             $imagick->setImageMatte(true);
             $imagick->setImageBackgroundColor($pixel);
 
-            if (version_compare('6.3.1', $this->getVersion($imagick)) < 0) {
+            if (method_exists($imagick, 'setImageOpacity') && version_compare('6.3.1', $this->getVersion($imagick)) < 0) {
                 $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
             }
 
@@ -98,6 +101,7 @@ final class Imagine extends AbstractImagine
     {
         try {
             $imagick = new \Imagick();
+            $imagick->setResolution(300.0, 300.0);
 
             $imagick->readImageBlob($string);
             $imagick->setImageMatte(true);
@@ -119,6 +123,7 @@ final class Imagine extends AbstractImagine
 
         try {
             $imagick = new \Imagick();
+            $imagick->setResolution(300.0, 300.0);
             $imagick->readImageFile($resource);
         } catch (\ImagickException $e) {
             throw new RuntimeException('Could not read image from resource', $e->getCode(), $e);

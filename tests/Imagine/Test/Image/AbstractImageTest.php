@@ -556,6 +556,19 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals('#0082a2', (string) $color);
     }
 
+    public function testStripImageWithInvalidProfile()
+    {
+        $image = $this
+            ->getImagine()
+            ->open('tests/Imagine/Fixtures/invalid-icc-profile.jpg');
+
+        $color = $image->getColorAt(new Point(0, 0));
+        $image->strip();
+        $afterColor = $image->getColorAt(new Point(0, 0));
+
+        $this->assertEquals((string) $color, (string) $afterColor);
+    }
+
     public function testGetColorAt()
     {
         $color = $this
@@ -701,12 +714,49 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($file);
     }
 
+    public function testDisableAlphaOptionOnSave()
+    {
+        if (!$this->supportMatteChannel()) {
+            $this->markTestSkipped('This driver does not handle matte channel');
+        }
+
+        $outFile = __DIR__ . '/test-disable-alpha.jpg';
+
+        $image = $this->getImagine()->open(__DIR__ . '/../../Fixtures/grayscalematte.pdf');
+
+        $box = new Box(200, 200);
+        $image = $image->resize($box)->save($outFile, array('disable-alpha' => true));
+
+        if ($image instanceof \Imagine\Imagick\Image) {
+            $imagick = new \Imagick($outFile);
+            $this->assertEquals(array(
+                'r' => 255,
+                'g' => 255,
+                'b' => 255,
+                'a' => 1,
+            ),$imagick->getImagePixelColor(10, 10)->getColor());
+        }
+        unlink($outFile);
+    }
+
     public function provideVariousSources()
     {
         return array(
             array(__DIR__.'/../../Fixtures/example.svg'),
             array(__DIR__.'/../../Fixtures/100-percent-black.png'),
         );
+    }
+
+    public function testFillAlphaPrecision()
+    {
+        $imagine = $this->getImagine();
+        $palette = new RGB();
+        $image = $imagine->create(new Box(1, 1), $palette->color("#f00"));
+        $fill = new Horizontal(100, $palette->color("#f00", 17), $palette->color("#f00", 73));
+        $image->fill($fill);
+
+        $actualColor = $image->getColorAt(new Point(0, 0));
+        $this->assertEquals(17, $actualColor->getAlpha());
     }
 
     public function testImageCreatedAlpha()
@@ -758,4 +808,9 @@ abstract class AbstractImageTest extends ImagineTestCase
      * @return boolean
      */
     abstract protected function supportMultipleLayers();
+
+    /**
+     * @return boolean
+     */
+    abstract protected function supportMatteChannel();
 }

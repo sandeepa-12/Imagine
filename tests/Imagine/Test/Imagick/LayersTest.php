@@ -21,7 +21,7 @@ use Imagine\Image\Palette\RGB;
 
 class LayersTest extends AbstractLayersTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -33,11 +33,11 @@ class LayersTest extends AbstractLayersTest
     public function testCount()
     {
         $palette = new RGB();
-        $resource = $this->getMock('\Imagick');
+        $resource = $this->createMock('\Imagick');
 
         $resource->expects($this->once())
             ->method('getNumberImages')
-            ->will($this->returnValue(42));
+            ->willReturn(42);
 
         $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 
@@ -47,17 +47,17 @@ class LayersTest extends AbstractLayersTest
     public function testGetLayer()
     {
         $palette = new RGB();
-        $resource = $this->getMock('\Imagick');
+        $resource = $this->createMock('\Imagick');
 
         $resource->expects($this->any())
             ->method('getNumberImages')
-            ->will($this->returnValue(2));
+            ->willReturn(2);
 
-        $layer = $this->getMock('\Imagick');
+        $layer = $this->createMock('\Imagick');
 
         $resource->expects($this->any())
             ->method('getImage')
-            ->will($this->returnValue($layer));
+            ->willReturn($layer);
 
         $layers = new Layers(new Image($resource, $palette, new MetadataBag()), $palette, $resource);
 

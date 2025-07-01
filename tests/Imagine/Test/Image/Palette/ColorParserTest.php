@@ -33,6 +33,7 @@ class ColorParserTest extends ImagineTestCase
     public function testParseToRGBThatFails($value)
     {
         $parser = new ColorParser();
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
         $parser->parseToRGB($value);
     }
 
@@ -53,6 +54,7 @@ class ColorParserTest extends ImagineTestCase
     public function testParseToCMYKThatFails($value)
     {
         $parser = new ColorParser();
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
         $parser->parseToCMYK($value);
     }
 
@@ -124,6 +126,7 @@ class ColorParserTest extends ImagineTestCase
     public function testParseToGrayscaleThatFails($value)
     {
         $parser = new ColorParser();
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
         $parser->parseToGrayscale($value);
     }
 

@@ -92,7 +92,7 @@ final class Imagine extends AbstractImagine
 
         $resource = @imagecreatefromstring($data);
 
-        if (!is_resource($resource)) {
+        if (! ($resource instanceof \GdImage)) {
             throw new RuntimeException(sprintf('Unable to open image %s', $path));
         }
 
@@ -112,7 +112,7 @@ final class Imagine extends AbstractImagine
      */
     public function read($resource)
     {
-        if (!is_resource($resource)) {
+        if (! is_resource($resource) && ! ($resource instanceof \GdImage)) {
             throw new InvalidArgumentException('Variable does not contain a stream resource');
         }
 
@@ -186,7 +186,7 @@ final class Imagine extends AbstractImagine
     {
         $resource = @imagecreatefromstring($string);
 
-        if (!is_resource($resource)) {
+        if (! ($resource instanceof \GdImage)) {
             throw new InvalidArgumentException('An image could not be created from the given input');
         }
 

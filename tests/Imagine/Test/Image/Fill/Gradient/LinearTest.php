@@ -14,8 +14,9 @@ namespace Imagine\Test\Image\Fill\Gradient;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
+use PHPUnit\Framework\TestCase;
 
-abstract class LinearTest extends \PHPUnit_Framework_TestCase
+abstract class LinearTest extends TestCase
 {
     /**
      * @var Imagine\Image\Fill\FillInterface
@@ -33,7 +34,7 @@ abstract class LinearTest extends \PHPUnit_Framework_TestCase
     private $end;
     protected $palette;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->start = $this->getStart();
         $this->end   = $this->getEnd();

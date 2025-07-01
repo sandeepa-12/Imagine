@@ -12,8 +12,9 @@
 namespace Imagine\Test\Image\Metadata;
 
 use Imagine\Image\Metadata\MetadataBag;
+use PHPUnit\Framework\TestCase;
 
-class MetadataBagTest extends \PHPUnit_Framework_TestCase
+class MetadataBagTest extends TestCase
 {
     public function testArrayAccessImplementation()
     {

@@ -14,8 +14,9 @@ namespace Imagine\Test\Functional;
 use Imagine\Image\Point;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
+use PHPUnit\Framework\TestCase;
 
-class GdTransparentGifHandlingTest extends \PHPUnit_Framework_TestCase
+class GdTransparentGifHandlingTest extends TestCase
 {
     private function getImagine()
     {

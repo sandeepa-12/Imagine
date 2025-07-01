@@ -32,7 +32,7 @@ class ResizeTest extends FilterTestCase
         $image->expects($this->once())
             ->method('resize')
             ->with($size)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $command = new Resize($size);
 

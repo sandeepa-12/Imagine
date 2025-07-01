@@ -17,8 +17,9 @@ use Imagine\Image\Palette\RGB;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\OutOfBoundsException;
 use Imagine\Image\ImagineInterface;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractLayersTest extends TestCase
 {
     public function testMerge()
     {
@@ -214,6 +215,7 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {
+        $this->expectException(InvalidArgumentException::class);
         $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
         $layers = $image->layers();
 

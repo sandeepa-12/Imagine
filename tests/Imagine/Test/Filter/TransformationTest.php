@@ -29,12 +29,12 @@ class TransformationTest extends FilterTestCase
         $image->expects($this->once())
             ->method('resize')
             ->with($size)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->once())
             ->method('save')
             ->with($path)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $transformation = new Transformation();
         $this->assertSame($image, $transformation->resize($size)
@@ -57,26 +57,26 @@ class TransformationTest extends FilterTestCase
         $image->expects($this->once())
             ->method('resize')
             ->with($resize)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->once())
             ->method('copy')
-            ->will($this->returnValue($clone));
+            ->willReturn($clone);
 
         $clone->expects($this->once())
             ->method('rotate')
             ->with($angle, $background)
-            ->will($this->returnValue($clone));
+            ->willReturn($clone);
 
         $clone->expects($this->once())
             ->method('thumbnail')
             ->with($size, ManipulatorInterface::THUMBNAIL_INSET)
-            ->will($this->returnValue($thumbnail));
+            ->willReturn($thumbnail);
 
         $thumbnail->expects($this->once())
             ->method('save')
             ->with($path)
-            ->will($this->returnValue($thumbnail));
+            ->willReturn($thumbnail);
 
         $transformation = new Transformation();
 
@@ -99,25 +99,25 @@ class TransformationTest extends FilterTestCase
         $img1->expects($this->once())
             ->method('paste')
             ->with($img2, $start)
-            ->will($this->returnValue($img1));
+            ->willReturn($img1);
 
         $img1->expects($this->once())
             ->method('show')
             ->with('png')
-            ->will($this->returnValue($img1));
+            ->willReturn($img1);
 
         $img2->expects($this->once())
             ->method('flipHorizontally')
-            ->will($this->returnValue($img2));
+            ->willReturn($img2);
 
         $img2->expects($this->once())
             ->method('flipVertically')
-            ->will($this->returnValue($img2));
+            ->willReturn($img2);
 
         $img2->expects($this->once())
             ->method('crop')
             ->with($start, $size)
-            ->will($this->returnValue($img2));
+            ->willReturn($img2);
 
         $transformation2 = new Transformation();
         $transformation2->flipHorizontally()

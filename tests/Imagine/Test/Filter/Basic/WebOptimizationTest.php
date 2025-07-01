@@ -25,11 +25,11 @@ class WebOptimizationTest extends FilterTestCase
         $image->expects($this->once())
             ->method('usePalette')
             ->with($this->isInstanceOf('Imagine\Image\Palette\RGB'))
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->once())
             ->method('strip')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->never())
             ->method('save');
@@ -51,20 +51,20 @@ class WebOptimizationTest extends FilterTestCase
         $image->expects($this->once())
             ->method('usePalette')
             ->with($this->isInstanceOf('Imagine\Image\Palette\RGB'))
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->once())
             ->method('strip')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->once())
             ->method('save')
             ->with($this->equalTo($result), $this->isType('array'))
-            ->will($this->returnCallback(function ($path, $options) use (&$capturedOptions, $image) {
+            ->willReturnCallback(function ($path, $options) use (&$capturedOptions, $image) {
                 $capturedOptions = $options;
 
                 return $image;
-            }));
+            });
 
         $this->assertSame($image, $filter->apply($image));
 
@@ -88,20 +88,20 @@ class WebOptimizationTest extends FilterTestCase
         $image->expects($this->once())
             ->method('usePalette')
             ->with($this->isInstanceOf('Imagine\Image\Palette\RGB'))
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->once())
             ->method('strip')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $image->expects($this->once())
             ->method('save')
             ->with($this->equalTo($path), $this->isType('array'))
-            ->will($this->returnCallback(function ($path, $options) use (&$capturedOptions, $image) {
+            ->willReturnCallback(function ($path, $options) use (&$capturedOptions, $image) {
                 $capturedOptions = $options;
 
                 return $image;
-            }));
+            });
 
         $this->assertSame($image, $filter->apply($image));
 

@@ -54,11 +54,11 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     public function testUseProfile()
     {
-        $this->getMock('Imagine\Image\ProfileInterface');
+        $this->createMock('Imagine\Image\ProfileInterface');
 
         $palette = $this->getPalette();
 
-        $new = $this->getMock('Imagine\Image\ProfileInterface');
+        $new = $this->createMock('Imagine\Image\ProfileInterface');
         $palette->useProfile($new);
 
         $this->assertEquals($new, $palette->profile());
@@ -72,12 +72,12 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     public function testName()
     {
-        $this->assertInternalType('string', $this->getPalette()->name());
+        $this->assertIsString($this->getPalette()->name());
     }
 
     public function testPixelDefinition()
     {
-        $this->assertInternalType('array', $this->getPalette()->pixelDefinition());
+        $this->assertIsArray($this->getPalette()->pixelDefinition());
 
         $available = array(
             ColorInterface::COLOR_RED,
@@ -97,7 +97,7 @@ abstract class AbstractPaletteTest extends ImagineTestCase
 
     public function testSupportsAlpha()
     {
-        $this->assertInternalType('boolean', $this->getPalette()->supportsAlpha());
+        $this->assertIsBool($this->getPalette()->supportsAlpha());
     }
 
     abstract public function provideColorAndAlphaTuples();

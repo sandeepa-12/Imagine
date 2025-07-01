@@ -18,7 +18,7 @@ use Imagine\Test\Image\AbstractImageTest;
 
 class ImageTest extends AbstractImageTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

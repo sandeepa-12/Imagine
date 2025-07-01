@@ -13,12 +13,13 @@ namespace Imagine\Test\Image\Histogram;
 
 use Imagine\Image\Histogram\Bucket;
 use Imagine\Image\Histogram\Range;
+use PHPUnit\Framework\TestCase;
 
-class BucketTest extends \PHPUnit_Framework_TestCase
+class BucketTest extends TestCase
 {
     private $bucket;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bucket = new Bucket(new Range(0, 63));
         $this->assertInstanceOf('Countable', $this->bucket);

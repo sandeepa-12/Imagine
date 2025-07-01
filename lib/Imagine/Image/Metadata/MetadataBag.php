@@ -27,7 +27,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }
@@ -35,7 +35,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->data);
     }
@@ -43,7 +43,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->data);
     }
@@ -51,7 +51,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->data[$offset] = $value;
     }
@@ -59,7 +59,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
@@ -67,7 +67,7 @@ class MetadataBag implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): ?string
     {
         return array_key_exists($offset, $this->data) ? $this->data[$offset] : null;
     }

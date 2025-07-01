@@ -34,26 +34,26 @@ class GrayscaleTest extends FilterTestCase
         $imageWidth  = $size->getWidth();
         $imageHeight = $size->getHeight();
 
-        $size = $this->getMock('Imagine\\Image\\BoxInterface');
+        $size = $this->createMock('Imagine\\Image\\BoxInterface');
         $size->expects($this->once())
              ->method('getWidth')
-             ->will($this->returnValue($imageWidth));
+             ->willReturn($imageWidth);
 
         $size->expects($this->once())
              ->method('getHeight')
-             ->will($this->returnValue($imageHeight));
+             ->willReturn($imageHeight);
 
         $image->expects($this->any())
             ->method('getSize')
-            ->will($this->returnValue($size));
+            ->willReturn($size);
 
         $image->expects($this->exactly($imageWidth*$imageHeight))
             ->method('getColorAt')
-            ->will($this->returnValue($color));
+            ->willReturn($color);
 
         $color->expects($this->exactly($imageWidth*$imageHeight))
             ->method('grayscale')
-            ->will($this->returnValue($filteredColor));
+            ->willReturn($filteredColor);
 
         $draw = $this->getDrawer();
         $draw->expects($this->exactly($imageWidth*$imageHeight))
@@ -62,7 +62,7 @@ class GrayscaleTest extends FilterTestCase
 
         $image->expects($this->exactly($imageWidth*$imageHeight))
               ->method('draw')
-              ->will($this->returnValue($draw));
+              ->willReturn($draw);
 
         $filter = new Grayscale();
         $this->assertSame($image, $filter->apply($image));

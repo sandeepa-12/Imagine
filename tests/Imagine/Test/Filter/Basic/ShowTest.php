@@ -25,7 +25,7 @@ class ShowTest extends FilterTestCase
         $image->expects($this->once())
             ->method('show')
             ->with($format)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $this->assertSame($image, $command->apply($image));
     }

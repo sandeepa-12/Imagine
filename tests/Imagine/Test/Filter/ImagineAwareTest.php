@@ -55,6 +55,7 @@ class ImagineAwareTest extends FilterTestCase
      */
     public function testFilterThrowsExceptionWhenCalledDirectly()
     {
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
         $filter = new DummyImagineAwareFilter();
         $filter->apply($this->getImage());
     }
@@ -67,6 +68,7 @@ class ImagineAwareTest extends FilterTestCase
      */
     public function testFilterThrowsExceptionViaTransformation()
     {
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
         $filters = new Transformation();
         $filters->add(new DummyImagineAwareFilter());
         $filters->apply($this->getImage());
@@ -74,10 +76,10 @@ class ImagineAwareTest extends FilterTestCase
 
     protected function getImagineMock()
     {
-        $imagineMock = $this->getMock('Imagine\\Image\\ImagineInterface');
+        $imagineMock = $this->createMock('Imagine\\Image\\ImagineInterface');
         $imagineMock->expects($this->once())
             ->method('create')
-            ->will($this->returnValue($this->getImage()));
+            ->willReturn($this->getImage());
 
         return $imagineMock;
     }

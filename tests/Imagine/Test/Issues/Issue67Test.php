@@ -4,8 +4,9 @@ namespace Imagine\Test\Issues;
 
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
+use PHPUnit\Framework\TestCase;
 
-class Issue67Test extends \PHPUnit_Framework_TestCase
+class Issue67Test extends TestCase
 {
     private function getImagine()
     {
@@ -24,6 +25,7 @@ class Issue67Test extends \PHPUnit_Framework_TestCase
     public function testShouldThrowExceptionNotError()
     {
         $invalidPath = '/thispathdoesnotexist';
+        $this->expectException(\Imagine\Exception\RuntimeException::class);
 
         $imagine = $this->getImagine();
 

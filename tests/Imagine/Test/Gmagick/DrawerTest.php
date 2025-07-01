@@ -16,7 +16,7 @@ use Imagine\Test\Draw\AbstractDrawerTest;
 
 class DrawerTest extends AbstractDrawerTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

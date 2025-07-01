@@ -14,8 +14,9 @@ namespace Imagine\Test\Image;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Point;
+use PHPUnit\Framework\TestCase;
 
-class PointTest extends \PHPUnit_Framework_TestCase
+class PointTest extends TestCase
 {
     /**
      * @covers Imagine\Image\Point::getX
@@ -67,6 +68,7 @@ class PointTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowExceptionOnInvalidCoordinates($x, $y)
     {
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
         new Point($x, $y);
     }
 

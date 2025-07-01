@@ -24,7 +24,7 @@ class CopyTest extends FilterTestCase
 
         $image->expects($this->once())
             ->method('copy')
-            ->will($this->returnValue($clone));
+            ->willReturn($clone);
 
         $this->assertSame($clone, $command->apply($image));
     }

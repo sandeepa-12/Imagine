@@ -39,7 +39,7 @@ class CanvasTest extends FilterTestCase
         $canvas->expects($this->once())->method('paste')->with($image, $placement);
 
         $imagine = $this->getImagine();
-        $imagine->expects($this->once())->method('create')->with($size, $background)->will($this->returnValue($canvas));
+        $imagine->expects($this->once())->method('create')->with($size, $background)->willReturn($canvas);
 
         $command = new Canvas($imagine, $size, $placement, $background);
 

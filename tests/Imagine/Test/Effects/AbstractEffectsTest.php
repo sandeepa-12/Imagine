@@ -15,8 +15,9 @@ use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Palette\RGB;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractEffectsTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractEffectsTest extends TestCase
 {
 
     public function testNegate()

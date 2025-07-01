@@ -56,6 +56,8 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
      */
     public function testReadFromInvalidFileThrowsAnException()
     {
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('File /path/to/no/file does not exist.');
         $this->getReader()->readFile('/path/to/no/file');
     }
 
@@ -88,6 +90,8 @@ abstract class MetadataReaderTestCase extends ImagineTestCase
      */
     public function testReadFromInvalidStreamThrowsAnException()
     {
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid resource provided.');
         $metadata = $this->getReader()->readStream(false);
         $this->assertInstanceOf('Imagine\Image\Metadata\MetadataBag', $metadata);
     }

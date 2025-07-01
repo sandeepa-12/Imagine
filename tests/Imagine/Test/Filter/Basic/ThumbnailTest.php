@@ -28,7 +28,7 @@ class ThumbnailTest extends FilterTestCase
         $image->expects($this->once())
             ->method('thumbnail')
             ->with($size, ManipulatorInterface::THUMBNAIL_INSET)
-            ->will($this->returnValue($thumbnail));
+            ->willReturn($thumbnail);
 
         $this->assertSame($thumbnail, $filter->apply($image));
     }

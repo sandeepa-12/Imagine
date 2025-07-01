@@ -23,7 +23,7 @@ class StripTest extends FilterTestCase
 
         $image->expects($this->once())
             ->method('strip')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $this->assertSame($image, $filter->apply($image));
     }

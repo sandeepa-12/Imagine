@@ -11,8 +11,15 @@
 
 namespace Imagine\Test\Filter;
 
-abstract class FilterTestCase extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+abstract class FilterTestCase extends TestCase
 {
+    protected function getMock(string $className)
+    {
+        return $this->createMock($className);
+    }
+
     protected function getImage()
     {
         return $this->getMock('Imagine\\Image\\ImageInterface');

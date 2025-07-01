@@ -13,7 +13,7 @@ namespace Imagine\Image\Palette\Color;
 
 use Imagine\Image\Palette\PaletteInterface;
 
-interface ColorInterface
+interface ColorInterface extends \Stringable
 {
     const COLOR_RED = 'red';
     const COLOR_GREEN = 'green';

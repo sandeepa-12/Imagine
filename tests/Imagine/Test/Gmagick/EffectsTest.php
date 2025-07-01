@@ -16,7 +16,7 @@ use Imagine\Test\Effects\AbstractEffectsTest;
 
 class EffectsTest extends AbstractEffectsTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +27,7 @@ class EffectsTest extends AbstractEffectsTest
 
     public function testColorize()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->expectException('RuntimeException');
         parent::testColorize();
     }
 

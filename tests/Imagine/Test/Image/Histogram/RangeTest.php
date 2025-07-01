@@ -12,8 +12,9 @@
 namespace Imagine\Test\Image\Histogram;
 
 use Imagine\Image\Histogram\Range;
+use PHPUnit\Framework\TestCase;
 
-class RangeTest extends \PHPUnit_Framework_TestCase
+class RangeTest extends TestCase
 {
     private $start = 0;
     private $end   = 63;
@@ -46,6 +47,7 @@ class RangeTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowExceptionIfEndIsSmallerThanStart()
     {
+        $this->expectException(\Imagine\Exception\OutOfBoundsException::class);
         new Range($this->end, $this->start);
     }
 }

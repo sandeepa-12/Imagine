@@ -15,8 +15,9 @@ use Imagine\Image\PointInterface;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\Box;
 use Imagine\Image\Point;
+use PHPUnit\Framework\TestCase;
 
-class BoxTest extends \PHPUnit_Framework_TestCase
+class BoxTest extends TestCase
 {
     /**
      * @covers Imagine\Image\Box::getWidth
@@ -61,6 +62,7 @@ class BoxTest extends \PHPUnit_Framework_TestCase
      */
     public function testShouldThrowExceptionOnInvalidSize($width, $height)
     {
+        $this->expectException(\Imagine\Exception\InvalidArgumentException::class);
         new Box($width, $height);
     }
 

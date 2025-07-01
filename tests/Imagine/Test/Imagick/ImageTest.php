@@ -22,7 +22,7 @@ use Imagine\Image\Box;
 
 class ImageTest extends AbstractImageTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -31,7 +31,7 @@ class ImageTest extends AbstractImageTest
         }
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (class_exists('Imagick')) {
             $prop = new \ReflectionProperty('Imagine\Imagick\Image', 'supportsColorspaceConversion');
@@ -80,7 +80,7 @@ class ImageTest extends AbstractImageTest
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
         $palette = new CMYK();
-        $imagick = $this->getMock('\Imagick');
+        $imagick = $this->createMock('\Imagick');
         $imagick->expects($this->any())
             ->method('setColorspace')
             ->will($this->throwException(new \RuntimeException('Method not supported')));
@@ -99,6 +99,8 @@ class ImageTest extends AbstractImageTest
      */
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnPaletteChange($image)
     {
+        $this->expectException(\Imagine\Exception\RuntimeException::class);
+        $this->expectExceptionMessage('Your version of Imagick does not support colorspace conversions.');
         $image->usePalette(new RGB());
     }
 

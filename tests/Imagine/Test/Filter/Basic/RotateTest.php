@@ -25,7 +25,7 @@ class RotateTest extends FilterTestCase
         $image->expects($this->once())
             ->method('rotate')
             ->with($angle)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $this->assertSame($image, $command->apply($image));
     }

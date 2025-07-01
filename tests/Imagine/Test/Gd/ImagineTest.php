@@ -17,7 +17,7 @@ use Imagine\Image\Box;
 
 class ImagineTest extends AbstractImagineTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +28,7 @@ class ImagineTest extends AbstractImagineTest
 
     protected function getEstimatedFontBox()
     {
-        return new Box(112, 46);
+        return new Box(116, 44);
     }
 
     protected function getImagine()

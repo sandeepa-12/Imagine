@@ -16,7 +16,7 @@ use Imagine\Test\Effects\AbstractEffectsTest;
 
 class EffectsTest extends AbstractEffectsTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

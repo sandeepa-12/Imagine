@@ -23,7 +23,7 @@ class FlipVerticallyTest extends FilterTestCase
 
         $image->expects($this->once())
             ->method('flipVertically')
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $this->assertSame($image, $filter->apply($image));
     }

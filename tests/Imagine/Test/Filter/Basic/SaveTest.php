@@ -25,7 +25,7 @@ class SaveTest extends FilterTestCase
         $image->expects($this->once())
             ->method('save')
             ->with($path)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $this->assertSame($image, $command->apply($image));
     }

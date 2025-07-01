@@ -6,8 +6,9 @@ use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
 use Imagine\Gd\Imagine;
 use Imagine\Exception\RuntimeException;
+use PHPUnit\Framework\TestCase;
 
-class Issue17Test extends \PHPUnit_Framework_TestCase
+class Issue17Test extends TestCase
 {
     private function getImagine()
     {

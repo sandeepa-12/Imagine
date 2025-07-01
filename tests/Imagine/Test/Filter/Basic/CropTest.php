@@ -37,7 +37,7 @@ class CropTest extends FilterTestCase
         $image->expects($this->once())
             ->method('crop')
             ->with($start, $size)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $this->assertSame($image, $command->apply($image));
     }

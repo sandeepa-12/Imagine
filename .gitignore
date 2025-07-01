@@ -6,3 +6,6 @@ imagine-*.phar
 composer.phar
 vendor/
 bin/
+.phpunit.result.cache
+report.xml
+composer.lock

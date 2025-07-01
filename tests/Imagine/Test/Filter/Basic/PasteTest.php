@@ -27,7 +27,7 @@ class PasteTest extends FilterTestCase
         $image->expects($this->once())
             ->method('paste')
             ->with($toPaste, $start)
-            ->will($this->returnValue($image));
+            ->willReturn($image);
 
         $this->assertSame($image, $filter->apply($image));
     }

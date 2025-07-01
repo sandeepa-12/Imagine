@@ -22,6 +22,7 @@ class CMYKTest extends AbstractColorTest
      */
     public function testDissolve()
     {
+        $this->expectException(\Imagine\Exception\RuntimeException::class);
         $this->getColor()->dissolve(1);
     }
 

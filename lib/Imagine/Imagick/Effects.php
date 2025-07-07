@@ -75,7 +75,7 @@ class Effects implements EffectsInterface
     public function colorize(ColorInterface $color)
     {
         try {
-            $this->imagick->colorizeImage((string) $color, 1, true);
+            $this->imagick->colorizeImage((string) $color, 'rgb(255, 255, 255)');
         } catch (\ImagickException $e) {
             throw new RuntimeException('Failed to colorize the image');
         }

@@ -44,7 +44,7 @@ class ImageTest extends AbstractImageTest
         $this->assertTrue($color->isOpaque());
     }
 
-    public function provideFromAndToPalettes()
+    public static function provideFromAndToPalettes()
     {
         return array(
             array(
@@ -60,7 +60,7 @@ class ImageTest extends AbstractImageTest
         );
     }
 
-    public function providePalettes()
+    public static function providePalettes()
     {
         return array(
             array('Imagine\Image\Palette\RGB', array(255, 0, 0)),

@@ -137,7 +137,7 @@ abstract class AbstractLayersTest extends TestCase
             $layers[$offset] = $secondImage;
             $this->fail('An exception should have been raised');
         } catch (InvalidArgumentException $e) {
-
+            $this->assertInstanceOf(InvalidArgumentException::class, $e);
         }
     }
 
@@ -155,10 +155,13 @@ abstract class AbstractLayersTest extends TestCase
             $layers[$offset] = $secondImage;
             $this->fail('An exception should have been raised');
         } catch (OutOfBoundsException $e) {
-
+            $this->assertInstanceOf(OutOfBoundsException::class, $e);
         }
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testAnimateEmpty()
     {
         $image = $this->getImage();
@@ -178,6 +181,7 @@ abstract class AbstractLayersTest extends TestCase
     }
 
     /**
+     * @doesNotPerformAssertions
      * @dataProvider provideAnimationParameters
      */
     public function testAnimateWithParameters($delay, $loops)
@@ -199,7 +203,7 @@ abstract class AbstractLayersTest extends TestCase
         @unlink($target);
     }
 
-    public function provideAnimationParameters()
+    public static function provideAnimationParameters()
     {
         return array(
             array(0, 0),
@@ -233,7 +237,7 @@ abstract class AbstractLayersTest extends TestCase
         @unlink($target);
     }
 
-    public function provideWrongAnimationParameters()
+    public static function provideWrongAnimationParameters()
     {
         return array(
             array(-1, 0),
@@ -243,7 +247,7 @@ abstract class AbstractLayersTest extends TestCase
         );
     }
 
-    public function provideInvalidArguments()
+    public static function provideInvalidArguments()
     {
         return array(
             array('lambda'),
@@ -253,7 +257,7 @@ abstract class AbstractLayersTest extends TestCase
         );
     }
 
-    public function provideOutOfBoundsArguments()
+    public static function provideOutOfBoundsArguments()
     {
         return array(
             array(-1),

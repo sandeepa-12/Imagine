@@ -40,7 +40,7 @@ class AutorotateTest extends FilterTestCase
         $filter->apply($image);
     }
 
-    public function provideMetadataAndRotations()
+    public static function provideMetadataAndRotations()
     {
         return array(
             array(null, new MetadataBag(array())),

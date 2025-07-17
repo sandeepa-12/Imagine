@@ -32,7 +32,7 @@ class RangeTest extends TestCase
         $this->assertEquals($contains, $range->contains($value));
     }
 
-    public function getExpectedResultsAndValues()
+    public static function getExpectedResultsAndValues()
     {
         return array(
             array(true, 12),

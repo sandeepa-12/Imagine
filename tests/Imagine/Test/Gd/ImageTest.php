@@ -32,21 +32,21 @@ class ImageTest extends AbstractImageTest
         $this->markTestSkipped('GD driver does not support resolution options');
     }
 
-    public function provideFilters()
+    public static function provideFilters()
     {
         return array(
             array(ImageInterface::FILTER_UNDEFINED),
         );
     }
 
-    public function providePalettes()
+    public static function providePalettes()
     {
         return array(
             array('Imagine\Image\Palette\RGB', array(255, 0, 0)),
         );
     }
 
-    public function provideFromAndToPalettes()
+    public static function provideFromAndToPalettes()
     {
         return array(
             array(
@@ -63,7 +63,7 @@ class ImageTest extends AbstractImageTest
             parent::testProfile();
             $this->fail('A RuntimeException should have been raised');
         } catch (RuntimeException $e) {
-
+            $this->assertInstanceOf(RuntimeException::class, $e);
         }
     }
 

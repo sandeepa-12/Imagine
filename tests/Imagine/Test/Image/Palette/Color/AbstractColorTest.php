@@ -112,15 +112,15 @@ abstract class AbstractColorTest extends ImagineTestCase
         $this->assertFalse($color->isOpaque());
     }
 
-    abstract public function provideColorAndValueComponents();
+    abstract public static function provideColorAndValueComponents();
 
-    abstract public function provideOpaqueColors();
+    abstract public static function provideOpaqueColors();
 
-    abstract public function provideNotOpaqueColors();
+    abstract public static function provideNotOpaqueColors();
 
-    abstract public function provideGrayscaleData();
+    abstract public static function provideGrayscaleData();
 
-    abstract public function provideColorAndAlphaTuples();
+    abstract public static function provideColorAndAlphaTuples();
 
     /**
      * @return ColorInterface

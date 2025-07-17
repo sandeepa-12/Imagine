@@ -17,7 +17,7 @@ use Imagine\Image\Palette\Grayscale;
 
 class GrayTest extends AbstractColorTest
 {
-    public function provideOpaqueColors()
+    public static function provideOpaqueColors()
     {
         return array(
             array(new Gray(new Grayscale(), array(12), 100)),
@@ -25,27 +25,30 @@ class GrayTest extends AbstractColorTest
             array(new Gray(new Grayscale(), array(255), 100)),
         );
     }
-    public function provideNotOpaqueColors()
+    public static function provideNotOpaqueColors()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array($this->getColor()),
+            array($getColor),
             array(new Gray(new Grayscale(), array(12), 23)),
             array(new Gray(new Grayscale(), array(0), 45)),
             array(new Gray(new Grayscale(), array(255), 0)),
         );
     }
 
-    public function provideGrayscaleData()
+    public static function provideGrayscaleData()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array('#0c0c0c', $this->getColor()),
+            array('#0c0c0c', $getColor),
         );
     }
 
-    public function provideColorAndAlphaTuples()
+    public static function provideColorAndAlphaTuples()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array(14, $this->getColor())
+            array(14, $getColor)
         );
     }
 
@@ -54,12 +57,13 @@ class GrayTest extends AbstractColorTest
         return new Gray(new Grayscale(), array(12), 14);
     }
 
-    public function provideColorAndValueComponents()
+    public static function provideColorAndValueComponents()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
             array(array(
                 ColorInterface::COLOR_GRAY => 12,
-            ), $this->getColor()),
+            ), $getColor),
         );
     }
 }

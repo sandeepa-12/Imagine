@@ -1,0 +1,147 @@
+stages:
+  - build
+  - unit-tests
+  - package
+  - prepare
+  - release
+
+variables:
+  BASE_QA_IMAGE: tikiwiki/tikiwiki-ci:8.1-qa
+  COMPOSER_CACHE_DIR: ${CI_PROJECT_DIR}/.composercache
+  COMPOSER_FLAGS: '--ansi --no-progress --prefer-dist -n'
+
+.install-composer-script: &install-composer-script
+  - composer install $COMPOSER_FLAGS
+
+.update-composer-script: &update-composer-script
+  - composer update $COMPOSER_FLAGS
+
+.composer-cache:
+  cache: &composer-cache
+    key: cache-imagine
+    paths:
+      - vendor/
+      - .composercache/files
+  artifacts:
+    paths:
+      - vendor/
+    when: on_success
+    expire_in: 1h
+
+.cache-composercache: &cache-composercache
+  key:
+    prefix: "composer"
+    files:
+      - vendor/composer.lock
+  paths:
+    - .composercache/
+  policy: pull-push
+
+compressed:
+  stage: package
+  variables:
+    PACK_FILES_FOLDERS_LIST: lib vendor composer.json composer.lock
+  script:
+    - tar czvf imagine.tgz ${PACK_FILES_FOLDERS_LIST}
+  allow_failure: false
+  needs:
+    - composer
+  cache:
+    <<: *composer-cache
+  artifacts:
+    name: imagine.tgz
+    paths:
+      - imagine.tgz
+    when: on_success
+  only:
+    refs:
+      - master
+      - tags
+  except:
+    variables:
+      - $SCHEDULER == "update_vendor"
+
+upload:
+  stage: prepare
+  image: curlimages/curl:latest
+  allow_failure: false
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/      # Run this job when a tag is created, and tag match version regexp
+  needs:
+    - compressed
+  script:
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file imagine.tgz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/imagine/${CI_COMMIT_TAG}/imagine.tgz"
+
+# Create a release when a tag is pushed
+release_job:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/      # Run this job when a tag is created, and tag match version regexp
+  dependencies:
+    - upload
+  needs:
+    - upload
+  script:
+    - echo "Running release_job"
+  release:
+    tag_name: $CI_COMMIT_TAG
+    description: "Release of ${CI_COMMIT_TAG}"
+    assets:
+      links:
+        - name: imagine.tgz
+          url: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/imagine/${CI_COMMIT_TAG}/imagine.tgz"
+          link_type: 'package'
+          filepath: '/imagine.tgz'
+
+composer:
+  stage: build
+  needs: []
+  image: ${BASE_QA_IMAGE}
+  variables:
+    COMPOSER_DISCARD_CHANGES: "true"
+    COMPOSER_NO_INTERACTION: "1"
+  script:
+    - composer -V | grep "version 2" || composer self-update --2
+    - composer install --prefer-dist --no-progress
+  cache: [*cache-composercache]
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 2 days
+
+unit-tests:
+  stage: unit-tests
+  needs:
+    - composer
+  image: tikiwiki/tikiwiki-ci:${PHP_VERSION}-qa
+  before_script:
+    - apt-get update --allow-releaseinfo-change
+    - add-apt-repository -y ppa:ondrej/php
+    - apt-get update
+    - apt-get install -y imagemagick
+    - apt-get install -y php${PHP_VERSION}-imagick 
+    - echo "Enabling ImageMagick to read/write PDFs"
+    - |
+      if [ -f /etc/ImageMagick-6/policy.xml ]; then
+        sed -i -e 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/' /etc/ImageMagick-6/policy.xml
+        sed -i -e 's/<policy domain="coder" rights="none" pattern="EPS" \/>/<policy domain="coder" rights="read|write" pattern="EPS" \/>/' /etc/ImageMagick-6/policy.xml
+      fi
+    - *update-composer-script
+    - *install-composer-script  
+  script:
+    - php -d display_errors=On bin/phpunit --colors=always --log-junit report.xml --display-deprecations --display-notices --display-warnings
+  cache:
+    <<: *composer-cache  
+  artifacts:
+    when: always
+    paths:
+      - report.xml
+    reports:
+      junit: report.xml
+    expire_in: 2 days
+  allow_failure: false
+  parallel:
+    matrix:
+      - PHP_VERSION: ['8.1', '8.2', '8.3', '8.4']

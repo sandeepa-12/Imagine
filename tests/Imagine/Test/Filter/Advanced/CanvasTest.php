@@ -51,10 +51,11 @@ class CanvasTest extends FilterTestCase
      *
      * @return array
      */
-    public function getDataSet()
+    public static function getDataSet()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array(new Box(50, 15), new Point(10, 10), $this->getColor()),
+            array(new Box(50, 15), new Point(10, 10), $getColor),
             array(new Box(300, 25), new Point(15, 15)),
             array(new Box(123, 23)),
         );

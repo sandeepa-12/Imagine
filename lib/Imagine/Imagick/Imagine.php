@@ -72,7 +72,7 @@ final class Imagine extends AbstractImagine
         $color = null !== $color ? $color : $palette->color('fff');
 
         try {
-            $pixel = new \ImagickPixel((string) $color . 'FF');
+            $pixel = new \ImagickPixel((string) $color);
             $pixel->setColorValue(\Imagick::COLOR_ALPHA, $color->getAlpha() / 100);
 
             $imagick = new \Imagick();
@@ -80,9 +80,12 @@ final class Imagine extends AbstractImagine
             $imagick->newImage($width, $height, $pixel);
             $imagick->setImageMatte(true);
             $imagick->setImageBackgroundColor($pixel);
+            $alpha = $color->getAlpha() / 100;
 
-            if (method_exists($imagick, 'setImageOpacity') && version_compare('6.3.1', $this->getVersion($imagick)) < 0) {
-                $imagick->setImageOpacity($pixel->getColorValue(\Imagick::COLOR_ALPHA));
+            if (method_exists($imagick, 'evaluateImage')) {
+                $imagick->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $alpha, \Imagick::CHANNEL_ALPHA);
+            } elseif (method_exists($imagick, 'setImageOpacity') && version_compare('6.3.1', $this->getVersion($imagick)) < 0) {
+                $imagick->setImageOpacity($alpha);
             }
 
             $pixel->clear();

@@ -46,12 +46,15 @@ class VerticalTest extends LinearTest
      * (non-PHPdoc)
      * @see Imagine\Image\Fill\Gradient\LinearTest::getPointsAndShades()
      */
-    public function getPointsAndColors()
+    public static function getPointsAndColors()
     {
+        $getColor1 = (new self('getColor'))->getColor('fff');
+        $getColor2 = (new self('getColor'))->getColor('000');
+        $getColor3 = (new self('getColor'))->getColor(array(128, 128, 128));
         return array(
-            array($this->getColor('fff'), new Point(5, 100)),
-            array($this->getColor('000'), new Point(15, 0)),
-            array($this->getColor(array(128, 128, 128)), new Point(25, 50))
+            array($getColor1, new Point(5, 100)),
+            array($getColor2, new Point(15, 0)),
+            array($getColor3, new Point(25, 50))
         );
     }
 }

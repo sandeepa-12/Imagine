@@ -42,7 +42,7 @@ class CenterTest extends TestCase
      *
      * @return array
      */
-    public function getSizesAndCoordinates()
+    public static function getSizesAndCoordinates()
     {
         return array(
             array(new Box(10, 15), new Point(5, 8)),
@@ -72,7 +72,7 @@ class CenterTest extends TestCase
         $this->assertEquals($y1, $shift->getY());
     }
 
-    public function getMoves()
+    public static function getMoves()
     {
         return array(
             array(new Box(10, 20), 5, 10, 15),

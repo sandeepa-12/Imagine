@@ -26,10 +26,11 @@ class CMYKTest extends AbstractColorTest
         $this->getColor()->dissolve(1);
     }
 
-    public function provideOpaqueColors()
+    public static function provideOpaqueColors()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array($this->getColor()),
+            array($getColor),
         );
     }
 
@@ -38,22 +39,24 @@ class CMYKTest extends AbstractColorTest
         $this->markTestSkipped('CMYK color can not be not opaque');
     }
 
-    public function provideNotOpaqueColors()
+    public static function provideNotOpaqueColors()
     {
-        $this->markTestSkipped('CMYK color can not be not opaque');
+        self::markTestSkipped('CMYK color can not be not opaque');
     }
 
-    public function provideGrayscaleData()
+    public static function provideGrayscaleData()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array('cmyk(42%, 42%, 42%, 25%)', $this->getColor()),
+            array('cmyk(42%, 42%, 42%, 25%)', $getColor),
         );
     }
 
-    public function provideColorAndAlphaTuples()
+    public static function provideColorAndAlphaTuples()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array(null, $this->getColor())
+            array(null, $getColor)
         );
     }
 
@@ -62,15 +65,16 @@ class CMYKTest extends AbstractColorTest
         return new CMYK(new CMYKPalette(), array(12, 23, 45, 25));
     }
 
-    public function provideColorAndValueComponents()
+    public static function provideColorAndValueComponents()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
             array(array(
                 ColorInterface::COLOR_CYAN => 12,
                 ColorInterface::COLOR_MAGENTA => 23,
                 ColorInterface::COLOR_YELLOW => 45,
                 ColorInterface::COLOR_KEYLINE => 25,
-            ), $this->getColor()),
+            ), $getColor),
         );
     }
 }

@@ -9,6 +9,27 @@
     <testsuites>
         <testsuite name="Imagine Test Suite">
             <directory>./tests/Imagine/</directory>
+            <!--
+            PHPUnit by default recursively loads all PHP files in the test directory,
+            including abstract test classes.
+
+            Abstract test classes are meant to be extended, not executed directly.
+            If not excluded, PHPUnit will issue warnings like: "Class ... is abstract"
+
+            These warnings do not affect test correctness but cause a non-zero exit code (1),
+            which may be treated as a failure in CI pipelines or Composer scripts.
+
+            To prevent these unnecessary warnings and allow for clean test runs,
+            we explicitly exclude all abstract test classes here.
+            -->
+            <exclude>./tests/Imagine/Test/Draw/AbstractDrawerTest.php</exclude>
+            <exclude>./tests/Imagine/Test/Effects/AbstractEffectsTest.php</exclude>
+            <exclude>./tests/Imagine/Test/Image/AbstractImageTest.php</exclude>
+            <exclude>./tests/Imagine/Test/Image/AbstractImagineTest.php</exclude>
+            <exclude>./tests/Imagine/Test/Image/AbstractLayersTest.php</exclude>
+            <exclude>./tests/Imagine/Test/Image/Fill/Gradient/LinearTest.php</exclude>
+            <exclude>./tests/Imagine/Test/Image/Palette/AbstractPaletteTest.php</exclude>
+            <exclude>./tests/Imagine/Test/Image/Palette/Color/AbstractColorTest.php</exclude>
         </testsuite>
     </testsuites>
 

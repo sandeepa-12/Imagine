@@ -40,7 +40,7 @@ class BucketTest extends TestCase
         $this->assertEquals($count, $this->bucket->count());
     }
 
-    public function getCountAndValues()
+    public static function getCountAndValues()
     {
         return array(
             array(3, array(12, 123, 232, 142, 152, 172, 93, 35, 44)),

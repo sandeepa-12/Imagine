@@ -16,9 +16,9 @@ use Imagine\Image\Palette\Color\Gray;
 
 class GrayscaleTest extends AbstractPaletteTest
 {
-    public function provideColorAndAlphaTuples()
+    public static function provideColorAndAlphaTuples()
     {
-        $palette = $this->getPalette();
+        $palette = (new self('getPalette'))->getPalette();
 
         return array(
             array(new Gray($palette, array(23), 0), array(23, 23, 23), null),
@@ -30,16 +30,16 @@ class GrayscaleTest extends AbstractPaletteTest
         );
     }
 
-    public function provideColorAndAlpha()
+    public static function provideColorAndAlpha()
     {
         return array(
             array(array(23, 23, 23), 0.5),
         );
     }
 
-    public function provideColorsForBlending()
+    public static function provideColorsForBlending()
     {
-        $palette = $this->getPalette();
+        $palette = (new self('getPalette'))->getPalette();
 
         return array(
             array(

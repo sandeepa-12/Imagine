@@ -47,6 +47,9 @@ class ImageTest extends AbstractImageTest
         return new Imagine();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testImageResizeUsesProperMethodBasedOnInputAndOutputSizes()
     {
         $imagine = $this->getImagine();
@@ -76,7 +79,10 @@ class ImageTest extends AbstractImageTest
         $this->assertEquals($image->getSize()->getWidth(), 2250);
     }
 
-    // Older imagemagick versions does not support colorspace conversion
+    /**
+     * Older imagemagick versions does not support colorspace conversion
+     * @doesNotPerformAssertions
+     */
     public function testOlderImageMagickDoesNotAffectColorspaceUsageOnConstruct()
     {
         $palette = new CMYK();

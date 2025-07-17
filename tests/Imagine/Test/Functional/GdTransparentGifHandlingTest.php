@@ -29,6 +29,9 @@ class GdTransparentGifHandlingTest extends TestCase
         return $imagine;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testShouldResize()
     {
         $imagine = $this->getImagine();

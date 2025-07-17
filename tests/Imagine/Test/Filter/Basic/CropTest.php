@@ -47,7 +47,7 @@ class CropTest extends FilterTestCase
      *
      * @return array
      */
-    public function getDataSet()
+    public static function getDataSet()
     {
         return array(
             array(new Point(0, 0), new Box(40, 50)),

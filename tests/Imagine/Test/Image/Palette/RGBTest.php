@@ -16,9 +16,9 @@ use Imagine\Image\Palette\Color\RGB as RGBColor;
 
 class RGBTest extends AbstractPaletteTest
 {
-    public function provideColorAndAlphaTuples()
+    public static function provideColorAndAlphaTuples()
     {
-        $palette = $this->getPalette();
+        $palette = (new self('getPalette'))->getPalette();
 
         return array(
             array(new RGBColor($palette, array(23, 24, 0), 0), array(23, 24, 0), null),
@@ -30,16 +30,16 @@ class RGBTest extends AbstractPaletteTest
         );
     }
 
-    public function provideColorAndAlpha()
+    public static function provideColorAndAlpha()
     {
         return array(
             array(array(23, 24, 0), 0.5),
         );
     }
 
-    public function provideColorsForBlending()
+    public static function provideColorsForBlending()
     {
-        $palette = $this->getPalette();
+        $palette = (new self('getPalette'))->getPalette();
 
         return array(
             array(

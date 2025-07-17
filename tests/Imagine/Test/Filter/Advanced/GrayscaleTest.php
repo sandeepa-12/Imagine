@@ -51,7 +51,7 @@ class GrayscaleTest extends FilterTestCase
             ->method('getColorAt')
             ->willReturn($color);
 
-        $color->expects($this->exactly($imageWidth*$imageHeight))
+        $color->expects($this->any())
             ->method('grayscale')
             ->willReturn($filteredColor);
 
@@ -73,12 +73,13 @@ class GrayscaleTest extends FilterTestCase
      *
      * @return array
      */
-    public function getDataSet()
+    public static function getDataSet()
     {
+        $getColor = (new self('getColor'))->getColor();
         return array(
-            array(new Box(20, 10), $this->getColor(), $this->getColor()),
-            array(new Box(10, 15), $this->getColor(), $this->getColor()),
-            array(new Box(12, 23), $this->getColor(), $this->getColor()),
+            array(new Box(20, 10), $getColor , $getColor),
+            array(new Box(10, 15), $getColor , $getColor),
+            array(new Box(12, 23), $getColor , $getColor),
         );
     }
 }

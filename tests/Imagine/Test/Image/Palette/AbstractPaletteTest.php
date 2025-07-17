@@ -100,9 +100,9 @@ abstract class AbstractPaletteTest extends ImagineTestCase
         $this->assertIsBool($this->getPalette()->supportsAlpha());
     }
 
-    abstract public function provideColorAndAlphaTuples();
+    abstract public static function provideColorAndAlphaTuples();
 
-    abstract public function provideColorsForBlending();
+    abstract public static function provideColorsForBlending();
 
     /**
      * @return PaletteInterface

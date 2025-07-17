@@ -45,7 +45,7 @@ class PointTest extends TestCase
      *
      * @return array
      */
-    public function getCoordinates()
+    public static function getCoordinates()
     {
         return array(
             array(0, 0, new Box(5, 5), true),
@@ -77,7 +77,7 @@ class PointTest extends TestCase
      *
      * @return array
      */
-    public function getInvalidCoordinates()
+    public static function getInvalidCoordinates()
     {
         return array(
             array(-1, 0),
@@ -107,7 +107,7 @@ class PointTest extends TestCase
         $this->assertEquals($y1, $shift->getY());
     }
 
-    public function getMoves()
+    public static function getMoves()
     {
         return array(
             array(0, 0, 5, 5, 5),

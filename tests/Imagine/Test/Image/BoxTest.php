@@ -41,7 +41,7 @@ class BoxTest extends TestCase
      *
      * @return array
      */
-    public function getSizes()
+    public static function getSizes()
     {
         return array(
             array(1, 1),
@@ -71,7 +71,7 @@ class BoxTest extends TestCase
      *
      * @return array
      */
-    public function getInvalidSizes()
+    public static function getInvalidSizes()
     {
         return array(
             array(0, 0),
@@ -105,7 +105,7 @@ class BoxTest extends TestCase
      *
      * @return array
      */
-    public function getSizeBoxStartAndExpected()
+    public static function getSizeBoxStartAndExpected()
     {
         return array(
             array(new Box(50, 50), new Box(30, 30), new Point(0, 0), true),
@@ -152,7 +152,7 @@ class BoxTest extends TestCase
         $this->assertEquals($square, $box->square());
     }
 
-    public function getSizesAndSquares()
+    public static function getSizesAndSquares()
     {
         return array(
             array(10, 15, 150),
@@ -178,7 +178,7 @@ class BoxTest extends TestCase
         $this->assertEquals($expected, $box->heighten($targetHeight));
     }
 
-    public function getDimensionsAndTargets()
+    public static function getDimensionsAndTargets()
     {
         return array(
             array(10, 50, 50, 250),

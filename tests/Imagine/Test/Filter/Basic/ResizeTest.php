@@ -44,7 +44,7 @@ class ResizeTest extends FilterTestCase
      *
      * @return array
      */
-    public function getDataSet()
+    public static function getDataSet()
     {
         return array(
             array(new Box(50, 15)),

@@ -19,6 +19,9 @@ class Issue59Test extends TestCase
         return $imagine;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testShouldResize()
     {
         $imagine = $this->getImagine();

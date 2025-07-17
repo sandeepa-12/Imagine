@@ -94,5 +94,5 @@ abstract class LinearTest extends TestCase
     /**
      * @return array
      */
-    abstract public function getPointsAndColors();
+    abstract public static function getPointsAndColors();
 }

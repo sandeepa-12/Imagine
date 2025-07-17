@@ -16,9 +16,9 @@ use Imagine\Image\Palette\Color\CMYK as CMYKColor;
 
 class CMYKTest extends AbstractPaletteTest
 {
-    public function provideColorAndAlphaTuples()
+    public static function provideColorAndAlphaTuples()
     {
-        $palette = $this->getPalette();
+        $palette = (new self('getPalette'))->getPalette();
 
         return array(
             array(new CMYKColor($palette, array(1, 2, 3, 4)), array(1, 2, 3, 4), null),
@@ -29,7 +29,7 @@ class CMYKTest extends AbstractPaletteTest
         );
     }
 
-    public function provideColorAndAlpha()
+    public static function provideColorAndAlpha()
     {
         return array(
             array(array(4, 3, 2, 1), null)
@@ -41,9 +41,9 @@ class CMYKTest extends AbstractPaletteTest
         $this->markTestSkipped('CMYK does not support alpha');
     }
 
-    public function provideColorsForBlending()
+    public static function provideColorsForBlending()
     {
-        $palette = $this->getPalette();
+        $palette = (new self('getPalette'))->getPalette();
 
         return array(
             array(

@@ -58,7 +58,7 @@ class ColorParserTest extends ImagineTestCase
         $parser->parseToCMYK($value);
     }
 
-    public function provideRGBdataToParse()
+    public static function provideRGBdataToParse()
     {
         return array(
             array(array(255, 255, 0), 'ff0'),
@@ -70,7 +70,7 @@ class ColorParserTest extends ImagineTestCase
         );
     }
 
-    public function provideCMYKdataToParse()
+    public static function provideCMYKdataToParse()
     {
         return array(
             array(array(0, 0, 0, 0), 'FFFFFF'),
@@ -87,7 +87,7 @@ class ColorParserTest extends ImagineTestCase
         );
     }
 
-    public function provideRGBdataThatFail()
+    public static function provideRGBdataThatFail()
     {
         return array(
             array(array(0, 1)),
@@ -98,7 +98,7 @@ class ColorParserTest extends ImagineTestCase
         );
     }
 
-    public function provideCMYKdataThatFail()
+    public static function provideCMYKdataThatFail()
     {
         return array(
             array(array(0, 1)),
@@ -130,7 +130,7 @@ class ColorParserTest extends ImagineTestCase
         $parser->parseToGrayscale($value);
     }
 
-    public function provideGrayscaledataToParse()
+    public static function provideGrayscaledataToParse()
     {
         return array(
             array(array(23), array(23, 23, 23)),
@@ -146,7 +146,7 @@ class ColorParserTest extends ImagineTestCase
         );
     }
 
-    public function provideGrayscaledataThatFail()
+    public static function provideGrayscaledataThatFail()
     {
         return array(
             array(array(23, 23, 24)),

@@ -66,9 +66,10 @@ class Issue131Test extends TestCase
 
         $imagine->save($targetFile);
 
-        if ( ! $this->probeOneFileAndCleanup($dir, $targetFile)) {
-            $this->fail('Imagick failed to generate one file');
-        }
+        $this->assertTrue(
+            $this->probeOneFileAndCleanup($dir, $targetFile),
+            'Imagick failed to generate one file'
+        );
     }
 
     public function testShouldSaveOneFileWithGmagick()

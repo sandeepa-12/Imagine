@@ -61,7 +61,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals($palette, $image->palette());
     }
 
-    public function providePalettes()
+    public static function providePalettes()
     {
         return array(
             array('Imagine\Image\Palette\RGB', array(255, 0, 0)),
@@ -142,7 +142,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image->save();
     }
 
-    public function provideFromAndToPalettes()
+    public static function provideFromAndToPalettes()
     {
         return array(
             array(
@@ -178,6 +178,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         );
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testProfile()
     {
         $this
@@ -199,6 +202,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertSame(364, $size->getHeight());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testCopyResizedImageToImage()
     {
         $factory = $this->getImagine();
@@ -216,6 +222,7 @@ abstract class AbstractImageTest extends ImagineTestCase
 
     /**
      * @dataProvider provideFilters
+     * @doesNotPerformAssertions
      */
     public function testResizeWithVariousFilters($filter)
     {
@@ -234,7 +241,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $image->resize(new Box(30, 30), 'no filter');
     }
 
-    public function provideFilters()
+    public static function provideFilters()
     {
         return array(
             array(ImageInterface::FILTER_UNDEFINED),
@@ -299,7 +306,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals($expectedH, $size->getHeight());
     }
 
-    public function provideDimensionsAndModesForThumbnailGeneration()
+    public static function provideDimensionsAndModesForThumbnailGeneration()
     {
         return array(
             // landscape with smaller portrait
@@ -489,6 +496,9 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($outfile);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testInOutResult()
     {
         $this->processInOut("trans", "png","png");
@@ -629,9 +639,12 @@ abstract class AbstractImageTest extends ImagineTestCase
         $this->assertEquals('#d07560', (string) $color);
     }
 
-    // Test whether a simple action such as resizing a GIF works
-    // Using the original animated GIF and a slightly more complex one as reference
-    // anima2.gif courtesy of Cyndi Norrie (http://cyndipop.tumblr.com/) via 15 Folds (http://15folds.com)
+    /**
+     * Test whether a simple action such as resizing a GIF works
+     * Using the original animated GIF and a slightly more complex one as reference
+     * anima2.gif courtesy of Cyndi Norrie (http://cyndipop.tumblr.com/) via 15 Folds (http://15folds.com)
+     * @doesNotPerformAssertions
+     */    
     public function testResizeAnimatedGifResizeResult()
     {
         if (!$this->supportMultipleLayers()) {
@@ -739,7 +752,7 @@ abstract class AbstractImageTest extends ImagineTestCase
         unlink($outFile);
     }
 
-    public function provideVariousSources()
+    public static function provideVariousSources()
     {
         return array(
             array(__DIR__.'/../../Fixtures/example.svg'),

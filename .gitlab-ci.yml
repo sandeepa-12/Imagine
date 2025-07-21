@@ -40,7 +40,7 @@ variables:
 compressed:
   stage: package
   variables:
-    PACK_FILES_FOLDERS_LIST: lib vendor composer.json composer.lock
+    PACK_FILES_FOLDERS_LIST: lib composer.json README.md LICENSE
   script:
     - tar czvf imagine.tgz ${PACK_FILES_FOLDERS_LIST}
   allow_failure: false

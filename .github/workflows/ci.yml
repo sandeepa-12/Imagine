@@ -8,7 +8,8 @@ on:
     branches: [master]
 
 env:
-  COMPOSER_CACHE_DIR: ~/.composer/cache
+  BASE_QA_IMAGE: tikiwiki/tikiwiki-ci:8.1-qa
+  COMPOSER_CACHE_DIR: ${{ github.workspace }}/.composercache
   COMPOSER_FLAGS: "--ansi --no-progress --prefer-dist -n"
 
 jobs:
@@ -17,7 +18,7 @@ jobs:
     name: Install Dependencies
     runs-on: ubuntu-latest
     container:
-      image: tikiwiki/tikiwiki-ci:8.1-qa
+      image: ${{ env.BASE_QA_IMAGE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,10 +26,8 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.composer/cache
-          key: composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            composer-
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: cache-imagine
 
       - name: Install Composer dependencies
         run: |
@@ -40,7 +39,7 @@ jobs:
         with:
           name: vendor
           path: vendor/
-          retention-days: 2
+          retention-days: 1
 
   # Unit tests across multiple PHP versions
   unit-tests:
@@ -65,10 +64,8 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.composer/cache
-          key: composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            composer-
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: cache-imagine
 
       - name: Setup ImageMagick and PHP extensions
         run: |
@@ -98,7 +95,7 @@ jobs:
         with:
           name: test-results-php${{ matrix.php-version }}
           path: report.xml
-          retention-days: 2
+          retention-days: 1
 
   # Package creation (matches GitLab CI compressed job)
   compressed:
@@ -107,7 +104,7 @@ jobs:
     needs: [composer]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
     container:
-      image: tikiwiki/tikiwiki-ci:8.1-qa
+      image: ${{ env.BASE_QA_IMAGE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -129,7 +126,7 @@ jobs:
     name: Upload Package
     runs-on: ubuntu-latest
     needs: [compressed]
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.ref_type == 'tag' && github.ref_name =~ /^v\d+\.\d+\.\d+$/
     container:
       image: curlimages/curl:latest
     steps:
@@ -148,16 +145,16 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -F "package_file=@imagine.tgz" \
-            "https://api.github.com/repos/${{ github.repository }}/packages/container/imagine/versions"
+            "https://api.github.com/repos/${{ github.repository }}/packages/generic/imagine/$TAG_NAME/imagine.tgz"
 
   # Release creation for tags
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    needs: [upload, unit-tests]
-    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [upload]
+    if: github.ref_type == 'tag' && github.ref_name =~ /^v\d+\.\d+\.\d+$/
     container:
-      image: tikiwiki/tikiwiki-ci:8.1-qa
+      image: ${{ env.BASE_QA_IMAGE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

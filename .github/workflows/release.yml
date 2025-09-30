@@ -2,8 +2,7 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    tags: ["v*"]
   workflow_dispatch:
     inputs:
       version:
@@ -11,13 +10,18 @@ on:
         required: true
         type: string
 
+env:
+  BASE_QA_IMAGE: tikiwiki/tikiwiki-ci:8.1-qa
+  COMPOSER_CACHE_DIR: ${{ github.workspace }}/.composercache
+  COMPOSER_FLAGS: "--ansi --no-progress --prefer-dist -n"
+
 jobs:
   # Create release package
   create-package:
     name: Create Release Package
     runs-on: ubuntu-latest
     container:
-      image: tikiwiki/tikiwiki-ci:8.1-qa
+      image: ${{ env.BASE_QA_IMAGE }}
     outputs:
       package-name: ${{ steps.package.outputs.name }}
       package-path: ${{ steps.package.outputs.path }}
@@ -61,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-package
     container:
-      image: tikiwiki/tikiwiki-ci:8.1-qa
+      image: ${{ env.BASE_QA_IMAGE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -38,7 +38,7 @@ jobs:
       - name: Upload vendor directory
         uses: actions/upload-artifact@v3
         with:
-          name: vendor-dir
+          name: vendor
           path: vendor/
           retention-days: 2
 
@@ -55,6 +55,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Download vendor directory
+        uses: actions/download-artifact@v3
+        with:
+          name: vendor
+          path: vendor/
 
       - name: Cache Composer dependencies
         uses: actions/cache@v3
@@ -94,11 +100,11 @@ jobs:
           path: report.xml
           retention-days: 2
 
-  # Package creation for releases
-  package:
-    name: Create Package
+  # Package creation (matches GitLab CI compressed job)
+  compressed:
+    name: Create Compressed Package
     runs-on: ubuntu-latest
-    needs: [composer, unit-tests]
+    needs: [composer]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
     container:
       image: tikiwiki/tikiwiki-ci:8.1-qa
@@ -106,23 +112,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create package
+      - name: Create compressed package
         run: |
           PACK_FILES_FOLDERS_LIST="lib composer.json README.md LICENSE"
           tar czvf imagine.tgz ${PACK_FILES_FOLDERS_LIST}
 
-      - name: Upload package
+      - name: Upload compressed package
         uses: actions/upload-artifact@v3
         with:
-          name: imagine-package
+          name: imagine-compressed
           path: imagine.tgz
           retention-days: 30
+
+  # Package upload
+  upload:
+    name: Upload Package
+    runs-on: ubuntu-latest
+    needs: [compressed]
+    if: startsWith(github.ref, 'refs/tags/v')
+    container:
+      image: curlimages/curl:latest
+    steps:
+      - name: Download compressed package
+        uses: actions/download-artifact@v3
+        with:
+          name: imagine-compressed
+          path: .
+
+      - name: Upload to GitHub Package Registry
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "Uploading package for tag: $TAG_NAME"
+          # Upload to GitHub Package Registry (matches GitLab CI upload functionality)
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -F "package_file=@imagine.tgz" \
+            "https://api.github.com/repos/${{ github.repository }}/packages/container/imagine/versions"
 
   # Release creation for tags
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    needs: [package, unit-tests]
+    needs: [upload, unit-tests]
     if: startsWith(github.ref, 'refs/tags/v')
     container:
       image: tikiwiki/tikiwiki-ci:8.1-qa
@@ -130,10 +162,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download package
+      - name: Download compressed package
         uses: actions/download-artifact@v3
         with:
-          name: imagine-package
+          name: imagine-compressed
           path: .
 
       - name: Extract tag name
@@ -145,7 +177,11 @@ jobs:
         with:
           tag_name: ${{ steps.tag.outputs.TAG_NAME }}
           name: Release ${{ steps.tag.outputs.TAG_NAME }}
-          body: "Release of ${{ steps.tag.outputs.TAG_NAME }}"
+          body: |
+            Release of ${{ steps.tag.outputs.TAG_NAME }}
+
+            **Package Download:**
+            - [imagine.tgz](https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.TAG_NAME }}/imagine.tgz)
           files: imagine.tgz
           draft: false
           prerelease: false

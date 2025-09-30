@@ -11,9 +11,6 @@ on:
         required: true
         type: string
 
-env:
-  COMPOSER_CACHE_DIR: ~/.composer/cache
-
 jobs:
   # Create release package
   create-package:
@@ -90,7 +87,11 @@ jobs:
         with:
           tag_name: ${{ steps.version.outputs.version }}
           name: Release ${{ steps.version.outputs.version }}
-          body: "Release of ${{ steps.version.outputs.version }}"
+          body: |
+            Release of ${{ steps.version.outputs.version }}
+
+            **Package Download:**
+            - [${{ needs.create-package.outputs.package-name }}](https://github.com/${{ github.repository }}/releases/download/${{ steps.version.outputs.version }}/${{ needs.create-package.outputs.package-name }})
           files: ${{ needs.create-package.outputs.package-name }}
           draft: false
           prerelease: false

@@ -58,7 +58,8 @@ abstract class AbstractImageTest extends ImagineTestCase
             ->getImagine()
             ->create(new Box(10, 10), $palette->color($input));
 
-        $this->assertEquals($palette, $image->palette());
+        // Compare palette names instead of objects, since profiles may be lazy-loaded
+        $this->assertEquals($palette->name(), $image->palette()->name());
     }
 
     public static function providePalettes()

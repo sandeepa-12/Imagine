@@ -140,7 +140,7 @@ jobs:
         run: |
           TAG_NAME=${GITHUB_REF#refs/tags/}
           echo "Uploading package for tag: $TAG_NAME"
-          # Upload to GitHub Package Registry (matches GitLab CI upload functionality)
+          # Upload to GitHub Package Registry
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \

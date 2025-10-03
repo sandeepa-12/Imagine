@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $COMPOSER_CACHE_DIR
           key: cache-imagine
@@ -35,7 +35,7 @@ jobs:
           composer install --prefer-dist --no-progress
 
       - name: Upload vendor directory
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: vendor
           path: vendor/
@@ -56,13 +56,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download vendor directory
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: vendor
           path: vendor/
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $COMPOSER_CACHE_DIR
           key: cache-imagine
@@ -90,7 +90,7 @@ jobs:
           php -d display_errors=On bin/phpunit --colors=always --log-junit report.xml --display-deprecations --display-notices --display-warnings
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results-php${{ matrix.php-version }}
@@ -115,7 +115,7 @@ jobs:
           tar czvf imagine.tgz ${PACK_FILES_FOLDERS_LIST}
 
       - name: Upload compressed package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: imagine-compressed
           path: imagine.tgz
@@ -131,7 +131,7 @@ jobs:
       image: curlimages/curl:latest
     steps:
       - name: Download compressed package
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: imagine-compressed
           path: .
@@ -160,7 +160,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download compressed package
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: imagine-compressed
           path: .

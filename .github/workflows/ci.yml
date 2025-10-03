@@ -8,7 +8,6 @@ on:
     branches: [master]
 
 env:
-  BASE_QA_IMAGE: tikiwiki/tikiwiki-ci:8.1-qa
   COMPOSER_CACHE_DIR: ${{ github.workspace }}/.composercache
   COMPOSER_FLAGS: "--ansi --no-progress --prefer-dist -n"
 
@@ -18,7 +17,7 @@ jobs:
     name: Install Dependencies
     runs-on: ubuntu-latest
     container:
-      image: $BASE_QA_IMAGE
+      image: tikiwiki/tikiwiki-ci:8.1-qa
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -104,7 +103,7 @@ jobs:
     needs: [composer]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v'))
     container:
-      image: $BASE_QA_IMAGE
+      image: tikiwiki/tikiwiki-ci:8.1-qa
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -154,7 +153,7 @@ jobs:
     needs: [upload]
     if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
     container:
-      image: $BASE_QA_IMAGE
+      image: tikiwiki/tikiwiki-ci:8.1-qa
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

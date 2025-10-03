@@ -7,10 +7,6 @@ on:
   pull_request:
     branches: [master]
 
-env:
-  COMPOSER_CACHE_DIR: ${{ github.workspace }}/.composercache
-  COMPOSER_FLAGS: "--ansi --no-progress --prefer-dist -n"
-
 jobs:
   # Build and dependency installation
   composer:
@@ -25,7 +21,7 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: $COMPOSER_CACHE_DIR
+          path: ${{ github.workspace }}/.composercache
           key: cache-imagine
 
       - name: Install Composer dependencies
@@ -63,7 +59,7 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: $COMPOSER_CACHE_DIR
+          path: ${{ github.workspace }}/.composercache
           key: cache-imagine
 
       - name: Setup ImageMagick and PHP extensions
@@ -81,8 +77,8 @@ jobs:
 
       - name: Update and install Composer dependencies
         run: |
-          composer update $COMPOSER_FLAGS
-          composer install $COMPOSER_FLAGS
+          composer update --ansi --no-progress --prefer-dist -n
+          composer install --ansi --no-progress --prefer-dist -n
 
       - name: Run PHPUnit tests
         run: |

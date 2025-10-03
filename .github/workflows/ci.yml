@@ -75,6 +75,11 @@ jobs:
             sed -i -e 's/<policy domain="coder" rights="none" pattern="EPS" \/>/<policy domain="coder" rights="read|write" pattern="EPS" \/>/' /etc/ImageMagick-6/policy.xml
           fi
 
+      - name: Configure Git for Composer
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          git config --global --add safe.directory '*'
+
       - name: Update and install Composer dependencies
         run: |
           composer update --ansi --no-progress --prefer-dist -n

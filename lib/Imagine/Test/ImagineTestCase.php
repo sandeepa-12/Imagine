@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class ImagineTestCase extends TestCase
 {
-    const HTTP_IMAGE = 'https://imagine.readthedocs.org/en/latest/_static/logo.jpg';
+    const HTTP_IMAGE = 'http://imagine.readthedocs.org/en/latest/_static/logo.jpg';
 
     /**
      * Asserts that two images are equal using color histogram comparison method

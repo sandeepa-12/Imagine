@@ -87,7 +87,7 @@ jobs:
 
       - name: Run PHPUnit tests
         run: |
-          php -d display_errors=On bin/phpunit --colors=always --log-junit report.xml --display-deprecations --display-notices --display-warnings
+          php -d display_errors=On -d user_agent="Mozilla/5.0" bin/phpunit --colors=always --log-junit report.xml --display-deprecations --display-notices --display-warnings
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

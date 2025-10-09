@@ -127,8 +127,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [compressed]
     if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
-    container:
-      image: curlimages/curl:latest
     steps:
       - name: Download compressed package
         uses: actions/download-artifact@v4
